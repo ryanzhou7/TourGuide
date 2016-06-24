@@ -6,7 +6,8 @@ package com.ryanzhou.company.tourguide.model;
 public class Startup {
     private String mName;
     private int mImageResource;
-    public Startup(String name, int drawableResource){
+
+    public Startup(String name, int drawableResource) {
         this.setName(name);
         this.setImageResource(drawableResource);
     }

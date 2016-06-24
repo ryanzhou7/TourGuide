@@ -32,11 +32,13 @@ public class MyStartupRecyclerViewAdapter extends RecyclerView.Adapter<MyStartup
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
+        holder.mTextViewName.setText(holder.mItem.getName());
+        holder.mLogo.setImageResource(holder.mItem.getImageResource());
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (null != mListener) {
-                    mListener.onListFragmentInteraction(holder.mItem);
+                    mListener.onClickStartup(holder.mItem);
                 }
             }
         });

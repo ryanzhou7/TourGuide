@@ -1,6 +1,5 @@
 package com.ryanzhou.company.tourguide;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -8,33 +7,51 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
+import com.ryanzhou.company.tourguide.genericTab.GenericListFragment;
+import com.ryanzhou.company.tourguide.model.Startup;
 import com.ryanzhou.company.tourguide.startupTab.StartupFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements StartupFragment.OnListFragmentInteractionListener,
+        GenericListFragment.OnFragmentInteractionListener {
+
+    private final int NUM_RECYLER_COLUMNS = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Get the ViewPager and set it's PagerAdapter so that it can display items
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
-        viewPager.setAdapter(new CategoryFragmentPagerAdapter(getSupportFragmentManager(),
-                MainActivity.this, createCategoryFragments()));
+        viewPager.setAdapter(new CategoryFragmentPagerAdapter(getSupportFragmentManager(), createCategoryFragments()));
 
-        // Give the TabLayout the ViewPager
         TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
         tabLayout.setupWithViewPager(viewPager);
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL); //distribute tabs across
+
     }
 
-    private List<Fragment> createCategoryFragments(){
+    private List<Fragment> createCategoryFragments() {
         List<Fragment> fragments = new ArrayList<>();
-        fragments.add( new StartupFragment() );
+        fragments.add(StartupFragment.newInstance(NUM_RECYLER_COLUMNS));
+        fragments.add(GenericListFragment.newInstance(R.array.restaurants_array));
+        fragments.add(GenericListFragment.newInstance(R.array.attractions_array));
+        fragments.add(GenericListFragment.newInstance(R.array.museums_array));
         return fragments;
+    }
+
+    @Override
+    public void onClickStartup(Startup item) {
+        Toast.makeText(this, "Show more info about " + item.getName(), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onClickItemWithname(String itemName) {
+        Toast.makeText(this, "Show more info about " + itemName, Toast.LENGTH_SHORT).show();
     }
 
     private class CategoryFragmentPagerAdapter extends FragmentPagerAdapter {
@@ -42,25 +59,20 @@ public class MainActivity extends AppCompatActivity {
         private final String tabTitles[] = new String[]{"Startups", "Restaurants",
                 "Activities", "Attractions"};
         final int PAGE_COUNT = tabTitles.length;
-        private Context context;
 
-        public CategoryFragmentPagerAdapter(FragmentManager fm, Context context,
-                                            List<Fragment> fragments) {
+        public CategoryFragmentPagerAdapter(FragmentManager fm, List<Fragment> fragments) {
             super(fm);
-            this.context = context;
             this.mCategoryFragments = fragments;
         }
 
         @Override
         public int getCount() {
-            return 1;
-            //PAGE_COUNT;
+            return PAGE_COUNT;
         }
 
         @Override
         public Fragment getItem(int position) {
-//            return mCategoryFragments.get(position);
-            return mCategoryFragments.get(0);
+            return mCategoryFragments.get(position);
         }
 
         @Override

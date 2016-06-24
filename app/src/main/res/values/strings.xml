@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">TourGuide</string>
+    <string-array name="restaurants_array">
+        <item>Howlin Rays</item>
+        <item>Angelini Osteria</item>
+        <item>Matsuhisa Restaurant</item>
+        <item>Providence</item>
+    </string-array>
+    <string-array name="museums_array">
+        <item>The Broad</item>
+        <item>Getty Villa</item>
+        <item>Los Angeles County Museum of Art</item>
+        <item>California Science Center</item>
+    </string-array>
+    <string-array name="attractions_array">
+        <item>Universal Studios Hollywood</item>
+        <item>Getty Center</item>
+        <item>Disneyland</item>
+        <item>Griffith Park</item>
+    </string-array>
 </resources>
