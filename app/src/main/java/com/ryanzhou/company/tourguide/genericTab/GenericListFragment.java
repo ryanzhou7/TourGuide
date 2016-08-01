@@ -50,6 +50,7 @@ public class GenericListFragment extends Fragment {
                 mListener.onClickItemWithname(items[position]);
             }
         });
+
         return view;
     }
 
